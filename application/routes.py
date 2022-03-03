@@ -1,9 +1,13 @@
 from flask import Flask
-from application import app
-from application import db
+from application import app, db
+from application.models import Recipe, User
+from flask import request
 
-app = Flask(__name__)
+#<.....................HOME PAGE.................>
+@app.route('/', methods=['GET'])
+def home_page():
+    return "Hello welcome to your recipe book!"
 
-@app.route('/')
-def hello_internet():
-    return "Hello Internet!"
+#<.......................Logic for User Login............................>
+
+#<>>>>>>>>>>>>>>>>>>>>>C-R-U-D for Recipe...............>
