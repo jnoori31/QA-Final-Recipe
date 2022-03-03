@@ -1,5 +1,5 @@
-from flask-app import db
-from flask-app.models import Recipes
+from application import db
+from application.models import Recipes
 
 db.drop_all()
 db.create_all()
