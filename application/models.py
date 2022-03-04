@@ -1,13 +1,22 @@
 from application import db
+from application import bcrypt
 
 class User(db.Model):
     # Define columns for user data
     id = db.Column(db.Integer, primary_key = True, autoincrement = True) # Primary key
     email = db.Column(db.String(75), nullable = False, unique = True) # Email
-    password = db.Column(db.String(100), nullable = False) # Password
+    password_hash = db.Column(db.String(100), nullable = False) # Password
     first_name = db.Column(db.String(50), nullable = False) # User Forename
     last_name = db.Column(db.String(50), nullable = False) # User Surname
     recipes = db.relationship('Item', backref='owned_user', lazy=True)
+
+@property
+def password(self):
+    return self.password
+
+@password.setter
+def password(self, plain_text_password):
+    self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
