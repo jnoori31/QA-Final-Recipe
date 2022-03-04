@@ -6,7 +6,8 @@ from flask import render_template, request
 #<.....................HOME PAGE.................>
 @app.route('/', methods=['GET'])
 def home_page():
-    return "Hello welcome to your recipe book!"
+    #return "Hello welcome to your recipe book!"
+    return render_template('base.html')
 
 #<.......................Logic for User Login............................>
 
