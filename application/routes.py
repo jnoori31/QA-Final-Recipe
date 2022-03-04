@@ -1,6 +1,6 @@
 from flask import Flask
 from application import app, db
-from application.models import Recipe, User
+from application.models import User, Recipe
 from flask import render_template, request
 
 #<.....................HOME PAGE.................>
@@ -16,3 +16,4 @@ def home_page():
 def read():
     recipes = Recipe.query.all()
     return render_template('read.html', recipe=recipes)
+    
