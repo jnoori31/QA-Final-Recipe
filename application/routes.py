@@ -1,13 +1,14 @@
 from flask import Flask
 from application import app, db
 from application.models import User, Recipe
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
+from application.forms import CreateForm, UpdateForm
 
 #<.....................HOME PAGE.................>
 @app.route('/', methods=['GET'])
 def home_page():
     #return "Hello welcome to your recipe book!"
-    return render_template('base.html')
+    return render_template('home.html')
 
 #<.......................Logic for User Login............................>
 
