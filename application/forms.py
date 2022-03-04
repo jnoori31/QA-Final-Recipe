@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, PasswordField,
+from wtforms import StringField, SubmitField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, Length, ValidationError, EqualTo, Email
 from application.models import User
 
@@ -19,7 +19,7 @@ class UpdateForm(FlaskForm):
     cooked = BooleanField('Cooked?')
     submit = SubmitField('Update Recipe')
 
-    class RegisterForm(FlaskForm):
+class RegisterForm(FlaskForm):
     def validate_username(self, username_to_check):
         user = User.query.filter_by(username=username_to_check.data).first()
         if user:
