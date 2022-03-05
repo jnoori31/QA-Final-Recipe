@@ -1,9 +1,15 @@
-from application import db
+from application import db, login_manager
 from application import bcrypt
+from flask_login import UserMixin
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+class User(db.Model, UserMixin):
     # Define columns for user data
     id = db.Column(db.Integer, primary_key = True, autoincrement = True) # Primary key
+    username = db.Column(db.String(length=30), nullable=False, unique=True) #Username for login/register
     email = db.Column(db.String(75), nullable = False, unique = True) # Email
     password_hash = db.Column(db.String(100), nullable = False) # Password
     first_name = db.Column(db.String(50), nullable = False) # User Forename
@@ -17,6 +23,9 @@ def password(self):
 @password.setter
 def password(self, plain_text_password):
     self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
+
+def check_password(self, password_attempt):
+    return bcrypt.check_password_hash(self.password_hash, password_attempt)    
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,8 +1,9 @@
-from flask import Flask
+from email.message import EmailMessage
 from application import app, db
 from application.models import User, Recipe
-from flask import render_template, request, redirect, url_for
-from application.forms import CreateForm, UpdateForm, LoginForm
+from flask import render_template, request, redirect, url_for, flash
+from application.forms import CreateForm, UpdateForm, LoginForm, RegisterForm
+from flask_login import login_user
 
 #<.....................HOME PAGE.................>
 @app.route('/', methods=['GET'])
@@ -10,12 +11,39 @@ def home_page():
     #return "Hello welcome to your recipe book!"
     return render_template('home.html')
 
-#<.......................Logic for User Login............................>
+#<.......................Login for User Logic............................>
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
-    return render_template('login.html', form=form)
+    if form.validate_on_submit():
+        user_attempt = User.query.filter_by(username=form.username.data).first()
+        if user_attempt and user_attempt.check_password(
+            passowrd_attempt=form.password.data
+        ):
+            login_user(user_attempt)
+            flash(f'Success! You are logged in as: {user_attempt.username}', category='success')
+            return redirect(url_for('home_page', form=form))
+        else:
+            flash(f'Username and passowrd did not match! Please try again', category='danger')
+    return render_template('login_page', form=form)
 
+
+#<.......................Register for User logic............................>    
+@app.route('/register', methods=['GET', 'POST'])
+def register_page():
+    registerform = RegisterForm
+    if registerform.validate_on_submit():
+        create_user = User(username=registerform.username.data,
+            email=registerform.email.data,
+            password=registerform.password.data)
+        db.session.add(create_user)
+        db.session.commit()
+        return redirect(url_for('home_page'))
+    if registerform.errors != {}:
+        for err_msg in registerform.errors.values():
+            flash(f'There was an error wirh creating a user: {err_msg}', category='danger')
+    
+    return render_template('register.html', form=registerform)
 
 #<>>>>>>>>>>>>>>>>>>>>>C-R-U-D for Recipe...............>
 #CREATE
