@@ -20,18 +20,19 @@ def login_page():
 #<.......................Register for User logic............................>    
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
-    if forms.validate_on_submit():
-        create_user = User(username=forms.username.data,
-            email=forms.email.data,
-            password=forms.password.data)
+    registerform = RegisterForm
+    if registerform.validate_on_submit():
+        create_user = User(username=registerform.username.data,
+            email=registerform.email.data,
+            password=registerform.password.data)
         db.session.add(create_user)
         db.session.commit()
         return redirect(url_for('home_page'))
-    if forms.errors != {}:
-        for err_msg in forms.errors.values():
+    if registerform.errors != {}:
+        for err_msg in registerform.errors.values():
             flash(f'There was an error wirh creating a user: {err_msg}', category='danger')
     
-    return render_template('register.html', form=forms)
+    return render_template('register.html', form=registerform)
 
 #<>>>>>>>>>>>>>>>>>>>>>C-R-U-D for Recipe...............>
 #CREATE
