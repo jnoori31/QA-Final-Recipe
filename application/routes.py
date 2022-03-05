@@ -23,11 +23,11 @@ def create():
         description=createform.description.data,
         ingredients=createform.ingredients.data,
         instructions=createform.instructions.data,
-        cooked=createform.coooked.data)
+        cooked=createform.cooked.data)
         db.session.add(recipe)
         db.session.commit()
         # Instead of rendering a template, the next line redirects the user to the endpoint for the function called 'read'.
-        return redirect(url_for('read'))
+        return redirect(url_for('home_page'))
     return render_template('create.html', form=createform)
 
 #READ
