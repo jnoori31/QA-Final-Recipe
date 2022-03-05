@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h3>All Tasks:</h3>
+<div style="text-align: center">
+    <h3>Here are your saved recipes:</h3>
     <p>
-    {% for task in tasks %}
-        Name: {{ task.name }} <br>
-        Description: {{ task.description }} <br>
+    {% for i in recipe %}
+        Name: {{ recipe.name }} <br>
+        Description: {{ i.description }} <br>
+        Ingredients: {{ i.ingredients }} <br>
+        Instructions: {{ i.instructions }} <br>
         <!--The following line checks if the task is completed or not-->
-        {% if task.completed == True %}
+        {% if i.cooked == True %}
         <!--The following line provides a text color based on if the task is complete or not-->
         Status: <span style="color: green">Completed</span>
         {% else %}
@@ -15,13 +18,14 @@
         <br>
         <!--The following line provides a link to the url for the complete/incomplete function and also passes in the required argument 'name'-->
         <!--Any of these links could be made in to buttons by using the <button> tag-->
-        <button><a href="{{ url_for('complete', name=task.name) }}">Complete</a></button>
-        <button><a href="{{ url_for('incomplete', name=task.name) }}">Incomplete</a></button> 
+        <button><a href="{{ url_for('has_been_cooked', name=i.name) }}">Cooked</a></button>
+        <button><a href="{{ url_for('to_cook', name=i.name) }}">Untired</a></button> 
         <br>
-        <span><a href="{{ url_for('update', name=task.name) }}">Update</a></span>
-        <span><a href="{{ url_for('delete', name=task.name) }}">Delete</a></span> 
+        <span><a href="{{ url_for('update', name=i.name) }}">Update</a></span>
+        <span><a href="{{ url_for('delete', name=i.name) }}">Delete</a></span> 
         <br>
         <br>
     {% endfor %}
     </p>
+</div>
 {% endblock content %}
