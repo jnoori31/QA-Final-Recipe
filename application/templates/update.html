@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block todo %}
-<h3>Update a Task:</h3>
+{% block content %}
+<h3>Recipes to ammend:</h3>
 <div class='form'>
     <form method='POST' action=''>
         {{ form.hidden_tag() }}
@@ -24,10 +24,30 @@
         </div>
         {% endif %}
         <br>
-        {{ form.completed.label }}
-        {{ form.completed }}
+        {{ form.ingredients.label }}
+        {{ form.ingredients }}
+        {% if form.ingredients.errors %}
+        <div class='error'>
+            {% for error in form.ingredients.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <br>
+        {{ form.instructions.label }}
+        {{ form.instructions }}
+        {% if form.instructions.errors %}
+        <div class='error'>
+            {% for error in form.instructions.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <br>
+        {{ form.cooked.label }}
+        {{ form.cooked }}
         <br>
         {{ form.submit }}
     </form>
 </div>
-{% endblock todo %}
+{% endblock content %}

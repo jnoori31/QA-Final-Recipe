@@ -57,6 +57,8 @@ def update(name):
         if updateform.validate_on_submit():
             recipe.name = updateform.name.data
             recipe.description = updateform.description.data
+            recipe.ingredients = updateform.ingredients.data
+            recipe.instructions = updateform.instructions.data
             recipe.cooked = updateform.cooked.data
             db.session.commit()
             return redirect(url_for('read'))
