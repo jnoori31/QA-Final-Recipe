@@ -1,5 +1,6 @@
-% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
+<div style="text-align: center">
 <h3>Create your recipe</h3>
 <div class='form'>
     <form method='POST' action=''>
@@ -24,7 +25,33 @@
         </div>
         {% endif %}
         <br>
+        {{ form.ingredients.label }}
+        {{ form.ingredients }}
+        {% if form.ingredients.errors %}
+        <div class='error'>
+            {% for error in form.ingredients.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <br>
+        {{ form.instructions.label }}
+        {{ form.instructions }}
+        {% if form.instructions.errors %}
+        <div class='error'>
+            {% for error in form.instructions.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        <br>
+        {{ form.cooked.label }}
+        {{ form.cooked }}
+        <br>
+        {% endif %}
+        <br>
+        <br>
         {{ form.submit }}
     </form>
+</div>
 </div>
 {% endblock content %}

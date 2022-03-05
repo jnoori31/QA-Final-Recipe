@@ -8,7 +8,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(100), nullable = False) # Password
     first_name = db.Column(db.String(50), nullable = False) # User Forename
     last_name = db.Column(db.String(50), nullable = False) # User Surname
-    recipes = db.relationship('Item', backref='owned_user', lazy=True)
+    recipes = db.relationship('Recipe', backref='owned_user', lazy=True)
 
 @property
 def password(self):
