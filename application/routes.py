@@ -1,9 +1,9 @@
 from email.message import EmailMessage
 from application import app, db
-from application import forms
 from application.models import User, Recipe
 from flask import render_template, request, redirect, url_for, flash
 from application.forms import CreateForm, UpdateForm, LoginForm, RegisterForm
+from flask_login import login_user
 
 #<.....................HOME PAGE.................>
 @app.route('/', methods=['GET'])
@@ -15,7 +15,10 @@ def home_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
+    if form.validate():
+        
     return render_template('login.html', form=form)
+
 
 #<.......................Register for User logic............................>    
 @app.route('/register', methods=['GET', 'POST'])
