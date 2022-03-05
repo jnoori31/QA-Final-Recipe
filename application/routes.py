@@ -17,7 +17,7 @@ def login_page():
     form = LoginForm()
     if form.validate_on_submit():
         user_attempt = User.query.filter_by(username=form.username.data).first()
-        if user_attempt and user_attempt.check_password_correction(
+        if user_attempt and user_attempt.check_password(
             passowrd_attempt=form.password.data
         ):
             login_user(user_attempt)
