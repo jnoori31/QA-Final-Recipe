@@ -3,4 +3,4 @@ flask_sqlalchemy
 pymysql
 wtforms
 flask_wtf
-#email_validator
+email_validator
