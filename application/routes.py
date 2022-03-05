@@ -15,9 +15,17 @@ def home_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
-    if form.validate():
-        
-    return render_template('login.html', form=form)
+    if form.validate_on_submit():
+        user_attempt = User.query.filter_by(username=form.username.data).first()
+        if user_attempt and user_attempt.check_password_correction(
+            passowrd_attempt=form.password.data
+        ):
+            login_user(user_attempt)
+            flash(f'Success! You are logged in as: {user_attempt.username}', category='success')
+            return redirect(url_for('home_page', form=form))
+        else:
+            flash(f'Username and passowrd did not match! Please try again', category='danger')
+    return render_template('login_page', form=form)
 
 
 #<.......................Register for User logic............................>    
