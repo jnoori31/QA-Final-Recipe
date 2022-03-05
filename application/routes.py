@@ -1,12 +1,12 @@
-from email.message import EmailMessage
 from application import app, db
 from application.models import User, Recipe
 from flask import render_template, request, redirect, url_for, flash
 from application.forms import CreateForm, UpdateForm, LoginForm, RegisterForm
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 
 #<.....................HOME PAGE.................>
 @app.route('/', methods=['GET'])
+@login_required
 def home_page():
     #return "Hello welcome to your recipe book!"
     return render_template('home.html')
@@ -16,34 +16,46 @@ def home_page():
 def login_page():
     form = LoginForm()
     if form.validate_on_submit():
-        user_attempt = User.query.filter_by(username=form.username.data).first()
-        if user_attempt and user_attempt.check_password(
-            passowrd_attempt=form.password.data
+        attempted_user = User.query.filter_by(username=form.username.data).first()
+        if attempted_user and attempted_user.check_password_correction(
+                attempted_password=form.password.data
         ):
-            login_user(user_attempt)
-            flash(f'Success! You are logged in as: {user_attempt.username}', category='success')
-            return redirect(url_for('home_page', form=form))
+            login_user(attempted_user)
+            flash(f'Success! You are logged in as: {attempted_user.username}', category='success')
+            return redirect(url_for('market_page'))
         else:
-            flash(f'Username and passowrd did not match! Please try again', category='danger')
-    return render_template('login_page', form=form)
+            flash('Username and password are not match! Please try again', category='danger')
+
+    return render_template('login.html', form=form)
+
 
 
 #<.......................Register for User logic............................>    
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
-    registerform = RegisterForm
-    if registerform.validate_on_submit():
-        create_user = User(username=registerform.username.data,
-            email=registerform.email.data,
-            password=registerform.password.data)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        create_user = User(username=form.username.data, 
+                email=form.email.data, 
+                password=form.password1.data)
         db.session.add(create_user)
         db.session.commit()
+        login_user(create_user)
+        flash(f"Account created successfully! You are now logged in as {create_user.username}", category='success')
         return redirect(url_for('home_page'))
-    if registerform.errors != {}:
-        for err_msg in registerform.errors.values():
-            flash(f'There was an error wirh creating a user: {err_msg}', category='danger')
-    
-    return render_template('register.html', form=registerform)
+    if form.errors != {}: #If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error with creating a user: {err_msg}', category='danger')
+
+    return render_template('register.html', form=form)
+
+
+#<..........................LOGOUT............................>
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    flash("You have been logged out!", category='info')
+    return redirect(url_for("home_page"))
 
 #<>>>>>>>>>>>>>>>>>>>>>C-R-U-D for Recipe...............>
 #CREATE
