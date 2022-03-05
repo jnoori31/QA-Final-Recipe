@@ -18,32 +18,36 @@ def login_page():
     if form.validate_on_submit():
         user_attempt = User.query.filter_by(username=form.username.data).first()
         if user_attempt and user_attempt.check_password(
-            passowrd_attempt=form.password.data
+                password_attempt=form.password.data
         ):
             login_user(user_attempt)
             flash(f'Success! You are logged in as: {user_attempt.username}', category='success')
-            return redirect(url_for('home_page', form=form))
+            return redirect(url_for('home_page'))
         else:
-            flash(f'Username and passowrd did not match! Please try again', category='danger')
-    return render_template('login_page', form=form)
+            flash('Username and password did not match! Please try again', category='danger')
+
+    return render_template('login.html', form=form)
+
 
 
 #<.......................Register for User logic............................>    
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
-    registerform = RegisterForm
-    if registerform.validate_on_submit():
-        create_user = User(username=registerform.username.data,
-            email=registerform.email.data,
-            password=registerform.password.data)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        create_user = User(username=form.username.data, 
+                email=form.email.data, 
+                password=form.password1.data)
         db.session.add(create_user)
         db.session.commit()
+        login_user(create_user)
+        flash(f"Account created successfully! You are now logged in as {create_user.username}", category='success')
         return redirect(url_for('home_page'))
-    if registerform.errors != {}:
-        for err_msg in registerform.errors.values():
-            flash(f'There was an error wirh creating a user: {err_msg}', category='danger')
-    
-    return render_template('register.html', form=registerform)
+    if form.errors != {}: #If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error with creating a user: {err_msg}', category='danger')
+
+    return render_template('register.html', form=form)
 
 #<>>>>>>>>>>>>>>>>>>>>>C-R-U-D for Recipe...............>
 #CREATE

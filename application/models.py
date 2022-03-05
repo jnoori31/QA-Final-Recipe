@@ -12,8 +12,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(length=30), nullable=False, unique=True) #Username for login/register
     email = db.Column(db.String(75), nullable = False, unique = True) # Email
     password_hash = db.Column(db.String(100), nullable = False) # Password
-    first_name = db.Column(db.String(50), nullable = False) # User Forename
-    last_name = db.Column(db.String(50), nullable = False) # User Surname
     recipes = db.relationship('Recipe', backref='owned_user', lazy=True)
 
 @property
