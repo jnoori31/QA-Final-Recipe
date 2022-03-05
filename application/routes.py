@@ -2,7 +2,7 @@ from flask import Flask
 from application import app, db
 from application.models import User, Recipe
 from flask import render_template, request, redirect, url_for
-from application.forms import CreateForm, UpdateForm
+from application.forms import CreateForm, UpdateForm, LoginForm
 
 #<.....................HOME PAGE.................>
 @app.route('/', methods=['GET'])
@@ -11,6 +11,11 @@ def home_page():
     return render_template('home.html')
 
 #<.......................Logic for User Login............................>
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    form = LoginForm()
+    return render_template('login.html', form=form)
+
 
 #<>>>>>>>>>>>>>>>>>>>>>C-R-U-D for Recipe...............>
 #CREATE
