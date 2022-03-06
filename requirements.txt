@@ -6,3 +6,6 @@ flask_wtf
 email_validator
 Flask-Login
 bcrypt
+flask_testing
+pytest
+pytest-cov

@@ -39,3 +39,5 @@ class Recipe(db.Model):
     instructions = db.Column(db.String(400), nullable=False)
     cooked = db.Column(db.Boolean, default=False)
     owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
+def __repr__(self):
+    return f'Recipe {self.name}'

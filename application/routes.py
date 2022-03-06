@@ -22,7 +22,7 @@ def login_page():
         ):
             login_user(attempted_user)
             flash(f'Success! You are logged in as: {attempted_user.username}', category='success')
-            return redirect(url_for('market_page'))
+            return redirect(url_for('home_page'))
         else:
             flash('Username and password are not match! Please try again', category='danger')
 
@@ -36,7 +36,7 @@ def register_page():
     form = RegisterForm()
     if form.validate_on_submit():
         create_user = User(username=form.username.data, 
-                email=form.email_address.data, 
+                email_address=form.email_address.data, 
                 password=form.password1.data)
         db.session.add(create_user)
         db.session.commit()
@@ -130,3 +130,4 @@ def to_cook(name):
     recipe.cooked = False
     db.session.commit()
     return redirect(url_for('read'))
+#CRUD COMPLETE PUSH UP TO GIT USING SMART COMMIT
