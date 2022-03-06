@@ -130,3 +130,4 @@ def to_cook(name):
     recipe.cooked = False
     db.session.commit()
     return redirect(url_for('read'))
+#CRUD COMPLETE PUSH UP TO GIT USING SMART COMMIT
