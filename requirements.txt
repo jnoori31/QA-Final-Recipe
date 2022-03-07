@@ -9,3 +9,6 @@ bcrypt
 flask_testing
 pytest
 pytest-cov
+mysql-client-core-8.0
+mariadb-client-core-10.3
+mysql-server

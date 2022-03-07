@@ -24,7 +24,8 @@ class TestBase(TestCase):
         # Create table
         db.create_all()
         # Create test registree
-        sample1 = User(username="MrMan", email_address="mrman@gmail.com", password_hash="password123")
+        #sample1 = User(username="MrMan", email_address="mrman@gmail.com", password_hash="password123")
+        sample1 = User(username="MrMan", email_address="mrman@gmail.com", password="password123")
         sample2 = Recipe(name="mrmanpie", description="hot baked pie", ingredients="eggs, flour, beef, potatoes", instructions="200 degress 30 mins", cooked=False)
         # save users to database
         db.session.add(sample2)
@@ -46,6 +47,11 @@ class TestViews(TestBase):
 
 class TestC_R_U_D(TestBase):
 
+    def login_test_user(self):
+        self.client.post('/login', data={'username': "MrMan",'password': "password123",},
+        follow_redirects=False
+        )
+
     def test_read_recipe(self):
         response = self.client.get(url_for('read'))
         #self.assertEqual(response.status_code, 200)
@@ -55,6 +61,8 @@ class TestC_R_U_D(TestBase):
         self.assertIn('200 degress 30 mins', str(response.data))
 
     def test_create_recipe(self):
+        with self.client:
+            self.login_test_user()
         response = self.client.post(url_for('create'), data=dict(name="created recipe", description="warm recipe", 
         ingredients="recipe1", instructions= "cook for 20 mins", cooked=True),
         follow_redirects=True
@@ -66,6 +74,8 @@ class TestC_R_U_D(TestBase):
         self.assertIn('cook for 20 mins', str(response.data))
 
     def test_update_recipe(self):
+        with self.client:
+            self.login_test_user()
         response = self.client.post(url_for('update', name='mrmanpie'), 
         data=dict(name="updated recipe", description="cold recipe", 
         ingredients="recipe2", instructions= "cook for 30 mins", cooked=True),
@@ -83,10 +93,3 @@ class TestC_R_U_D(TestBase):
         )
         #self.assertEqual(response.status_code, 200)
         self.assertNotIn('mrmanpie', str(response.data))
-    #Test each template
-    #Test Login
-    #Test Logout
-    #Test read
-    #Test create
-    #Test you can update
-    #Test you can delete
