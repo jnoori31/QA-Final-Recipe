@@ -1,4 +1,5 @@
 # Import the necessary modules
+from http import client
 from flask import url_for
 from flask_testing import TestCase
 from application.models import User, Recipe
@@ -47,49 +48,56 @@ class TestViews(TestBase):
 
 class TestC_R_U_D(TestBase):
 
-    def login_test_user(self):
+    def login_test_user(self, client):
         self.client.post('/login', data={'username': "MrMan",'password': "password123",},
         follow_redirects=False
         )
 
     def test_read_recipe(self):
         response = self.client.get(url_for('read'))
-        #self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertIn('mrmanpie', str(response.data))
         self.assertIn('hot baked pie', str(response.data))
         self.assertIn('eggs, flour, beef, potatoes', str(response.data))
         self.assertIn('200 degress 30 mins', str(response.data))
 
     def test_create_recipe(self):
-        with self.client:
-            self.login_test_user()
-        response = self.client.post(url_for('create'), data=dict(name="created recipe", description="warm recipe", 
-        ingredients="recipe1", instructions= "cook for 20 mins", cooked=True),
-        follow_redirects=True
-        )
-        #self.assertEqual(response.status_code, 200)
-        self.assertIn('created recipe', str(response.data))
-        self.assertIn('warm recipe', str(response.data))
-        self.assertIn('recipe1', str(response.data))
-        self.assertIn('cook for 20 mins', str(response.data))
+        with self.client as client:
+         self.login_test_user(client)
+        data = {"name": "created recipe", "description": "warm recipe", "ingredients": "recipe1", "instructions": "cook for 20 mins", "cooked":True}
+        response = self.client.post(url_for('create'), data=data, follow_redirects=True)
+        self.assertEqual(Recipe.query.filter_by(**data).count(), 1)
+
+    # def test_create_recipe(self):
+    #     with self.client:
+    #         self.login_test_user()
+    #     response = self.client.post(url_for('create'), data=dict(name="created recipe", description="warm recipe", 
+    #     ingredients="recipe1", instructions= "cook for 20 mins", cooked=True),
+    #     follow_redirects=True
+    #     )
+    #     #self.assertEqual(response.status_code, 200)
+    #     self.assertIn('created recipe', str(response.data))
+    #     self.assertIn('warm recipe', str(response.data))
+    #     self.assertIn('recipe1', str(response.data))
+    #     self.assertIn('cook for 20 mins', str(response.data))
+
+    
 
     def test_update_recipe(self):
-        with self.client:
-            self.login_test_user()
-        response = self.client.post(url_for('update', name='mrmanpie'), 
-        data=dict(name="updated recipe", description="cold recipe", 
-        ingredients="recipe2", instructions= "cook for 30 mins", cooked=True),
-        follow_redirects=True
-        )
-        #self.assertEqual(response.status_code, 200)
-        self.assertIn('updated recipe', str(response.data))
-        self.assertIn('cold recipe', str(response.data))
-        self.assertIn('recipe2', str(response.data))
-        self.assertIn('cook for 30 mins', str(response.data))
+        with self.client as client:
+         self.login_test_user(client)
+         data = {"name": "updated recipe", "description": "cold recipe", 
+        "ingredients": "recipe2", "instructions": "cook for 30 mins", 
+        "cooked":True}
+        response = self.client.post(url_for('update', name='mrmanpie'), data=data, follow_redirects=True)
+        self.assertEqual(Recipe.query.filter_by(**data).count(), 1)
+
     
     def test_delete_recipe(self):
         response = self.client.post(url_for('delete', name="mrmanpie"),
         follow_redirects=True
         )
-        #self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertNotIn('mrmanpie', str(response.data))
+
+    
