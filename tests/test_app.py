@@ -37,11 +37,11 @@ class TestBase(TestCase):
         db.session.remove()
         db.drop_all()
 
-# Test Templates/200
+# Test Home template cant be accessed without loging in.
 class TestViews(TestBase):
     def test_home_get(self):
         response = self.client.get(url_for('home_page'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 
 class TestC_R_U_D(TestBase):
