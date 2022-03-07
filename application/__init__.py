@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://qafinal:qafinal31@host/qa_db"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://qauser:newpassword123@local/qa_db"
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
