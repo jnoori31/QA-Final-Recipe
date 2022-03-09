@@ -6,11 +6,11 @@ import os
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://qauser:newpassword123@local/qa_db"
+#app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://qauser:newpassword123@local/qa_db"
 #app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///data.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#app.config['SECRET_KEY'] = 'hreuifh7ueyhf'
+app.config['SECRET_KEY'] = 'hreuifh7ueyhf'
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)

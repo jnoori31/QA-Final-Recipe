@@ -5,11 +5,11 @@ wtforms
 flask_wtf
 email_validator
 Flask-Login
-bcrypt
+flask_bcrypt
 flask_testing
 pytest
 pytest-cov
-mysql-client-core-8.0
-mariadb-client-core-10.3
-mysql-server
+#mysql-client-core-8.0
+#mariadb-client-core-10.3
+#mysql-server
 requests
