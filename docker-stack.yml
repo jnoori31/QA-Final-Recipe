@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  flask-app:
+    image: qa-flask-app:1
+    depends_on:
+      - mysql-db
+    deploy:
+      replicas: 1
+    ports:
+    - published: 5000
+      target: 5000
+    environment:
+      DATABASE_URI: 'mysql+pymysql://qauser:newpassword123@mysql-db:3306/qa_db'
+  mysql-db:
+    image: mysql:5.7
+    deploy:
+      replicas: 1
+    environment:
+      MYSQL_ROOT_PASSWORD: '1234567890'
+      MYSQL_USER: 'qauser'
+      MYSQL_PASSWORD: 'newpassword123'
+      MYSQL_DATABASE: 'qa_db'
+    ports:
+    - published: 3306
+      target: 3306
+    volumes:
+      - database-data:/var/lib/mysql
+
+volumes:
+  database-data:
+    
