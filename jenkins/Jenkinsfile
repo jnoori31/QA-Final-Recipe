@@ -1,9 +1,12 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_LOGIN = credentials('DOCKER_LOGIN')
+    }
     stages {
         stage('Setup') {
             steps {
-                sh "echo setup"
+                sh "bash jenkins/setup.sh"
             }
         }
         stage('Test') {
