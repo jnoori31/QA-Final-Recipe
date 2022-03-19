@@ -1,7 +1,8 @@
 version: '3.7'
 services:
   flask-app:
-    image: qa-flask-app:1
+    image: jnoori31/qa-flask-app:latest
+    build: .
     depends_on:
       - mysql-db
     deploy:
