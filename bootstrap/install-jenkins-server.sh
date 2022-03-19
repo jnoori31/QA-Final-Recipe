@@ -15,6 +15,8 @@ sudo ${pkg_mgr} update
 sudo ${pkg_mgr} install -y ${java} wget git > /dev/null
 echo "configuring jenkins user"
 sudo useradd -m -s /bin/bash jenkins
+# give jenkins user sudo priviledges
+echo "jenkins ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/jenkins
 echo "downloading latest jenkins WAR"
 sudo su - jenkins -c "curl -L https://updates.jenkins-ci.org/latest/jenkins.war --output jenkins.war"
 echo "setting up jenkins service"
