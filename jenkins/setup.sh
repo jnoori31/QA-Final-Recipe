@@ -23,9 +23,9 @@ if [ ! -f "/usr/bin/docker" ]; then
 
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-    # creating a jenkins user and giving it permission to run docker
-    sudo usermod -aG docker jenkins
 fi
+# creating a jenkins user and giving it permission to run docker
+sudo usermod -aG docker jenkins || true
 
 # install docker compose
 version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
