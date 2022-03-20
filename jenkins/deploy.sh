@@ -9,4 +9,5 @@ scp -o 'StrictHostKeyChecking no' \
 
 ssh -o 'StrictHostKeyChecking no' \
     jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com \
-    'docker stack deploy --compose-file docker-stack.yml qa-recipe'
+    BUILD_ID=${BUILD_ID} \
+    docker stack deploy --compose-file docker-stack.yml qa-recipe
