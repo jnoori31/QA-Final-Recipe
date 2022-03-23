@@ -11,22 +11,24 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "echo test"
+                sh "bash jenkins/test.sh"
             }
         }
         stage('Build') {
             steps {
-                sh "echo test"
+                // running inline as it is only one command
+                sh "docker-compose -f docker-stack.yml build"
             }
         }
         stage('Push') {
             steps {
-                sh "echo test"
+                // running inline as it is only one command
+                sh "docker-compose -f docker-stack.yml push"
             }
         }
         stage('Deploy') {
             steps {
-                sh "echo test"
+                sh "bash jenkins/deploy.sh"
             }
         }
     }
