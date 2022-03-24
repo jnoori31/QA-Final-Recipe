@@ -14,10 +14,10 @@ scp -o 'StrictHostKeyChecking no' \
 
 ssh -o 'StrictHostKeyChecking no' \
     jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com \
-    TAG=${BUILD_ID} \
-    DB_USER=${DB_LOGIN_USR} \
-    DB_PASSWORD=${DB_LOGIN_PSW} \
-    DB_ROOT_PASSWORD=${DB_ROOT_PSW} \
+    BUILD_ID=${BUILD_ID} \
+    DB_LOGIN_USR=${DB_LOGIN_USR} \
+    DB_LOGIN_PSW=${DB_LOGIN_PSW} \
+    DB_ROOT_PSW=${DB_ROOT_PSW} \
     docker stack deploy --compose-file docker-stack.yml qa-recipe
 
 ssh -o 'StrictHostKeyChecking no' \

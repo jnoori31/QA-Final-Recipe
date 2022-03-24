@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   flask-app:
-    image: "jnoori31/qa-flask-app:${TAG}"
+    image: "jnoori31/qa-flask-app:${BUILD_ID}"
     build: .
     depends_on:
       - mysql-db
@@ -11,16 +11,16 @@ services:
     - published: 5000
       target: 5000
     environment:
-      DATABASE_URI: "mysql+pymysql://${DB_USER}:${DB_PASSWORD}@mysql-db:3306/qa_db"
+      DATABASE_URI: "mysql+pymysql://${DB_LOGIN_USR}:${DB_LOGIN_PSW}@mysql-db:3306/qa_db"
   
   mysql-db:
     image: mysql:5.7
     deploy:
       replicas: 1
     environment:
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-      MYSQL_USER: "${DB_USER}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PSW}"
+      MYSQL_USER: "${DB_LOGIN_USR}"
+      MYSQL_PASSWORD: "${DB_LOGIN_PSW}"
       MYSQL_DATABASE: 'qa_db'
     ports:
     - published: 3306
