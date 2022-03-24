@@ -19,4 +19,4 @@ ssh -o 'StrictHostKeyChecking no' \
 
 ssh -o 'StrictHostKeyChecking no' \
     jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com \
-    docker exec \"\$(docker ps -q -f name=qa-recipe_flask-app)\" python create.py
+    "docker exec \`docker ps -q -f name=qa-recipe_flask-app\` python create.py"
