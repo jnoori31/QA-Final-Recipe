@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh "env"
                 sh "bash jenkins/setup.sh"
             }
         }
