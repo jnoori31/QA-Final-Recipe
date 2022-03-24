@@ -81,14 +81,17 @@ Once the app is considered stable and therefore customer-ready, it is then deplo
 I used Pytest to run unit tests on the app. Jenkins produces console outputs (pictured below) that will inform the developer how many tests the code passed and which tests they failed. For my application, the testing for the CRUD functionality has been carried out.
 Every time I push new code to GitHub, as I have used webhooks that connect to Jenkins, tests are automatically run in the CI/CD process run by Jenkins. 
 Screenshots for test coverage reports show that coverage reached 81%:
-Terminal output:
-Jenkins output:
-Future Improvements
+
+
+# Future Improvements
 Outside of any bugs- known and unknowns:
 I would like to improve the application on the aesthetic end using REACT as a frontend Javascript Library.
 From a functionality and automation perspective, there can be a major improvement. The user needs to manually type in the ingredients they have in order to create a recipe. This is time-consuming and cumbersome. If there was an option to select from a drop-down of pre-populated ingredients in the form when creating the recipe this would be ideal. 
+
 In order for that to happen, I would need to create a many-to-many table comprised of Users, Recipes and additionally Ingredients. The recipe table would be connected by two foreign keys joining both tables. 
 From a DevOps perspective, the creation of different pipelines for the different stages in Jenkins would be ideal to see and address any bugs- the more isolated the feedback could be the easier it is for the developer to allocate where things are going wrong.
+
+Last but not least- Had I had the time for this project sprint I would like to improve the markdown so that I can add images as well as links using a markdown cheat sheet. 
  
 Deployment Logs:
 I have used one pipeline for all my stages- Set up, Test, Build, Push & Deploy. One of the best things about logs is again isolating bugs to each stage and tackling them when they arise. 
@@ -100,7 +103,7 @@ After 38 builds- I finally managed to deploy to Swarm and have a fully functioni
 Automation of Build as soon as I push new code to Github- a trigger for Build is activated in Jenkins.
  
 
-Refactoring: 
+# Refactoring: 
 I have attached a Link that demonstrates where the refactoring has occurred. In short, initially, I created my own environment variables by reading credentials from the Jenkins credentials manager. Subseutenitally I created a build.sh file that exported each variable for each step. However, in keeping with the spirit of DevOps and DRY code principles it would be quicker, less code and more efficient to use the Jenkins environment variables by default. So refactored to use jenkins.
  
 Author Jnoori31, Version 1 March 2022
