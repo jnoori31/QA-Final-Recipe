@@ -12,6 +12,7 @@ services:
       target: 5000
     environment:
       DATABASE_URI: 'mysql+pymysql://qauser:newpassword123@mysql-db:3306/qa_db'
+  
   mysql-db:
     image: mysql:5.7
     deploy:
@@ -26,6 +27,21 @@ services:
       target: 3306
     volumes:
       - database-data:/var/lib/mysql
+
+  nginx:
+    image: nginx:latest
+    deploy:
+      replicas: 1
+    ports:
+      - published: 80
+        target: 80
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/nginx.conf
+
+configs:
+  nginx_config:
+    file: ./nginx/nginx.conf
 
 volumes:
   database-data:
