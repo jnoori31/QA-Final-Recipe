@@ -16,3 +16,7 @@ ssh -o 'StrictHostKeyChecking no' \
     jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com \
     BUILD_ID=${BUILD_ID} \
     docker stack deploy --compose-file docker-stack.yml qa-recipe
+
+ssh -o 'StrictHostKeyChecking no' \
+    jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com \
+    docker exec $(docker ps -q -f name=qa-recipe_flask-app) python create.py
