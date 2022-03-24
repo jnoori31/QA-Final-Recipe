@@ -103,8 +103,6 @@ Automation of Build as soon as I push new code to Github- a trigger for Build is
 Refactoring: 
 I have attached a Link that demonstrates where the refactoring has occurred. In short, initially, I created my own environment variables by reading credentials from the Jenkins credentials manager. Subseutenitally I created a build.sh file that exported each variable for each step. However, in keeping with the spirit of DevOps and DRY code principles it would be quicker, less code and more efficient to use the Jenkins environment variables by default. So refactored to use jenkins.
  
-[Please click on the link](https://github.com/jnoori31/QA-Final-Recipe/pull/32/commits/b3b5b89b118876c1fb53f8b900dc6efefdb7924c#diff-1c17dd108d70575fc286b45cccc105ed4b8f03961ef9f34502842c5b6fd0f868)
- 
 Author Jnoori31, Version 1 March 2022
  
  
