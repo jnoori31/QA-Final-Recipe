@@ -19,8 +19,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // running inline as it is only one command
-                sh "docker-compose -f docker-stack.yml build"
+                sh "bash jenkins/build.sh"
             }
         }
         stage('Push') {
