@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   flask-app:
-    image: jnoori31/qa-flask-app:${BUILD_ID}
+    image: "jnoori31/qa-flask-app:${BUILD_ID}"
     build: .
     depends_on:
       - mysql-db
@@ -11,21 +11,37 @@ services:
     - published: 5000
       target: 5000
     environment:
-      DATABASE_URI: 'mysql+pymysql://qauser:newpassword123@mysql-db:3306/qa_db'
+      DATABASE_URI: "mysql+pymysql://${DB_LOGIN_USR}:${DB_LOGIN_PSW}@mysql-db:3306/qa_db"
+  
   mysql-db:
     image: mysql:5.7
     deploy:
       replicas: 1
     environment:
-      MYSQL_ROOT_PASSWORD: '1234567890'
-      MYSQL_USER: 'qauser'
-      MYSQL_PASSWORD: 'newpassword123'
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PSW}"
+      MYSQL_USER: "${DB_LOGIN_USR}"
+      MYSQL_PASSWORD: "${DB_LOGIN_PSW}"
       MYSQL_DATABASE: 'qa_db'
     ports:
     - published: 3306
       target: 3306
     volumes:
       - database-data:/var/lib/mysql
+
+  nginx:
+    image: nginx:latest
+    deploy:
+      replicas: 1
+    ports:
+      - published: 80
+        target: 80
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/nginx.conf
+
+configs:
+  nginx_config:
+    file: ./nginx.conf
 
 volumes:
   database-data:
