@@ -41,7 +41,7 @@ services:
 
 configs:
   nginx_config:
-    file: ./nginx/nginx.conf
+    file: ./nginx.conf
 
 volumes:
   database-data:

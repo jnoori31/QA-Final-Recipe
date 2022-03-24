@@ -7,6 +7,11 @@ scp -o 'StrictHostKeyChecking no' \
     docker-stack.yml \
     jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com:/home/jenkins/docker-stack.yml
 
+scp -o 'StrictHostKeyChecking no' \
+    nginx/nginx.conf \
+    jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com:/home/jenkins/nginx.conf
+
+
 ssh -o 'StrictHostKeyChecking no' \
     jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com \
     BUILD_ID=${BUILD_ID} \
