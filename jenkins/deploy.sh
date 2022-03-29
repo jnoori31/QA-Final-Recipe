@@ -18,7 +18,10 @@ ssh -o 'StrictHostKeyChecking no' \
     DB_LOGIN_USR=${DB_LOGIN_USR} \
     DB_LOGIN_PSW=${DB_LOGIN_PSW} \
     DB_ROOT_PSW=${DB_ROOT_PSW} \
-    docker stack deploy --compose-file docker-stack.yml qa-recipe
+    docker stack deploy --compose-file docker-stack.yml qa-recipe 
+
+# noticed that it takes a while for the app to deploy before we can continue
+sleep 30s
 
 ssh -o 'StrictHostKeyChecking no' \
     jenkins@swarm-deployment-server.uksouth.cloudapp.azure.com \
