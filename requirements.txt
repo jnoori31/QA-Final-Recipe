@@ -13,3 +13,4 @@ pytest-cov
 #mariadb-client-core-10.3
 #mysql-server
 requests
+Werkzeug~=2.0.0
